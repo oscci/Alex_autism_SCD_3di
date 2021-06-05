@@ -1,0 +1,269 @@
+---
+title: "Deriving age-scaled scores from Wilson & Bishop tasks"
+output: html_notebook
+author: D. V. M. Bishop
+date: 4th June 2021
+---
+For a longer version that includes attempt at applying Bayesian regression, see Treasure Hunt Game, where norms for 3 tasks were derived.
+
+Here we just use linear regression to predict scores from school year band for all tasks with sufficient data.
+
+(An original script by Alex Wilson for analysing the raw data is available here:
+https://osf.io/4t6sx/ )
+
+These data can be used for rough norms for children in school years 3 to 8 (ages 7 to 13 years), though main purpose of these tasks is for group comparisons.  
+
+This dataset has been written up in a manuscript in press at Journal of Child Language:
+A. C. Wilson & D. V. M. Bishop  
+A novel online assessment battery devised to tease apart pragmatics and core language skills in primary-school children  
+https://www.cambridge.org/core/journals/journal-of-child-language/article/novel-online-assessment-of-pragmatic-and-core-language-skills-an-attempt-to-tease-apart-language-domains-in-children/2A2BA35AC8D46C219C0BB31D4CB8C838
+
+Details of participants and methods (in italic, below) are taken from that paper.  
+
+  
+## Participants
+
+*We aimed to recruit at least 120 child participants aged between 7;0 and 11;11, by inviting all the year 3, 4, 5 and 6 children in three primary schools to take part. We used an opt-out approach to recruitment; we asked schools to circulate information to parents/carers two weeks before research sessions, and if parents/carers preferred their child not to be involved, they returned an opt-out form to school. We excluded from analysis the data from four children identified by their teachers as having an autism diagnosis.*
+N.B. Subsequently the dataset was supplemented for Wilson's thesis with children from years 7 and 8, (ages 12-13 years). The aim was to gather data on 30 children at each of these year levels on each test: in practice, samples between 28 and 33 were obtained.
+
+*To maintain anonymity of the children involved in our project, we did not collect personally-identifying information. Teachers were simply asked against each child’s research ID to indicate their year group (i.e. years 3-6), gender, whether they were diagnosed with autism, and whether they spoke English as an additional language.*  
+
+*Children speaking English as an additional language tended to perform as well on our tasks as native speakers; it was only on vocabulary that a small advantage emerged for native speakers, who had a mean of 27.89 compared to 26.35, t (75.74) = 2.45, p = 0.017. Due to the practicalities of working in busy schools over several testing sessions, and IT difficulties, there is some missing data; 29.8% of children did not complete at least one of the tests. There is considerable missing data for the youngest children; this was not a consequence of any particular challenges these children experienced with testing but instead due to IT difficulties that occurred as a matter of coincidence with two year 3 classes.* 
+
+We do not have information on age for these children - just their school year band.
+In the analysis below, children with English as an Additional Language (EAL) are not screened out; Wilson and Bishop found little impact of this variable on scores. 
+
+## Tasks
+### Implicature Comprehension Test (Wilson & Bishop, 2019)
+
+*Participants watch a series of cartoon videos, in each of which two characters produce a short utterance one after the other. Together the utterances form a conversational adjacency pair; in most cases, this is a question and answer. After this dialogue, participants hear a comprehension question, and they give a yes-no-don't know response by clicking buttons on the screen. * 
+*For 36 items, participants need to process implied meaning to answer the question, as the second character provides an indirect response to the first character. An example item includes:  *
+*Character 1: “Could you hear what the police said?” Character 2: “There were lots of trains going past.” Comprehension Question: “Do you think she heard what the police said?” Correct Answer: “No.”  * 
+*There are also 10 items where the answer is more explicit; these serve as positive control items. An example item includes: *  
+*Character 1: “Did you see the policemen earlier on?” Character 2: “I saw them standing on the platform.” Comprehension Question: “Do you think he saw the policemen?” Correct Answer: “Yes.”  *
+*From these items, there were two measured variables: sum of implicature items correctly answered (out of 33; three items were excluded, as mentioned in Results) and sum of explicit-response items correctly answered (out of 10). * 
+
+### Children's Test of Local Textual Inference  
+
+*This is based on the adult version of this test (Wilson & Bishop, 2019). Participants hear two brief sections of a short story (about 90 words per part). After each section, they hear ten questions and four possible answers for each one. “We don't know” is an answer option for every question, and is the correct answer to four questions. Participants click the correct option on the screen. As well as auditory presentation of all materials, everything is shown in text-based form on the screen. Participants are informed at the start that the short story sections will remain on the screen while they are answering questions about that section. Participants need to make inferences based on the short story to answer the questions. The short story starts as follows: “Unfortunately, the family couldn't go swimming. The sea was rougher and colder than expected. Instead, Billy spent the whole morning playing a ballgame with his sister, Susie.” An example question is: “What had Billy planned to do?” Participants chose their answer from the following options: “play a ballgame”, “go swimming”, “walk along the sea”, and “we don't know”. There was one measured variable: the sum of items correctly answered (out of 20).*
+
+
+### Social Overtures
+
+*Participants hear 24 utterances spoken by a character to a conversational partner. Twelve are social overtures that attempt to engage the partner in a conversation (e.g., “I can't believe what happened today.”) and twelve are not conversational bids (e.g., “I'm going to have a shower now.”). Participants listen to instructions explaining that “There are different reasons why we say things to other people. Sometimes, we want to start a conversation. We want the other person to ask us questions and say lots of things to us. Other times we just want to tell the other person something very quickly. We don't always want to start a long conversation.” They are then asked for each sentence whether the speaker wants a conversation or not, and to indicate their answer by clicking yes-no buttons. There was one measured variable: the sum of items correctly identified as a social overture or not (out of 23; one item was excluded, as mentioned in Results).*
+
+### Picture-Word Matching Task (Vocabulary)
+*This includes 39 items in which participants choose which of four pictures is related to a word. Words are presented over audio and include nouns, verbs and adjectives. The words vary in approximate age of acquisition from 5 to 12, with similar numbers of easy and harder words; two experienced teachers independently rated the ages at which they would expect 50% and 90% of children in a typical class to be familiar with the word. There is one measured variable: the sum of items correctly answered (out of 39).* 
+A list of the items is available on https://osf.io/ybk7a/. One bad item ('lethargic') was dropped to give total of 39 items.
+
+### Children’s Grammaticality Decision Test  
+*Participants listen to sentences and decide if they are good or have mistakes/sound odd. There are 50 items: 4 sentences are entirely muddled and should be easily rejected, 20 items are borrowed from McDonald (2008) and showed high accuracy in primary school children, and 26 items are a subset of our adult version of this test (see https://osf.io/g4bvm); these latter items were chosen on the basis of high accuracy and high item-total correlations. Excluding the 4 muddled sentences, 23 items are grammatical and 23 are not. There is one measured variable: the sum of items currently answered (out of 50).*
+
+### Animal Matrices
+*This non-verbal reasoning task is an adapted version of the Animalogica multiple choice test (Stevenson, Heiser, & Resing, 2016). There are 18 items. Each item is a 2x2 matrix presented on the computer screen. In three of the boxes of each matrix, there are cartoon pictures of animals, and the fourth box is empty. The animals in the three boxes vary along six dimensions: species, colour, size, number, direction faced, and position in the box. There are systematic relationships between the three animals, and participants need to deduce which of five options fits in the empty box. For example, the top two boxes may show red lions, one big and one small, and the bottom left box may show a big yellow horse; the correct option to fill the empty box would be a small yellow horse. A paper-based version of the test had acceptable psychometric properties (Stevenson et al., 2016); in a sample of 111 5- and 6-year olds, the 18 items had Cronbach’s alpha of 0.75 and a correlation of 0.42 with a commercial IQ subtest. There is one measured variable: the sum of items correctly answered (out of 18).*
+
+Data can be downloaded direct from OSF. 
+
+```{r readdata}
+#====================================
+#Collect data from individual files 
+#and place in data-frame
+#====================================
+require(tidyverse)
+require(kableExtra)
+require(broom)
+require(ggpubr)
+require(dplyr)
+require(ggplot2)
+vocabdata<-read.csv("https://osf.io/2usqm/download",stringsAsFactors = F)
+grammardata<-read.csv("https://osf.io/a9nyq/download",stringsAsFactors = F)
+matricesdata<-read.csv("https://osf.io/k5ys4/download",stringsAsFactors = F)
+implicaturedata<-read.csv("https://osf.io/7q2n8/download",stringsAsFactors = F)
+inferencedata<-read.csv("https://osf.io/xp92n/download",stringsAsFactors = F)
+overturesdata<-read.csv("https://osf.io/4fzr8/download",stringsAsFactors = F)
+demographics<-read.csv("https://osf.io/g63fc/download",stringsAsFactors = F)
+
+alldata<-data.frame(matrix(ncol=9,nrow=length(demographics$ID),NA))
+alldata[,1]<-demographics$ID
+alldata[,2]<-demographics$year
+alldata[,3]<-demographics$male
+colnames(alldata)<-c('ID','year','male','vocab','grammar','inference','implicature','overture','matrices')
+for(i in 1:length(demographics$ID)){
+  myID<-demographics$ID[i]
+  w<-which(vocabdata$ID==myID)
+  
+  if(length(w)>0){
+    alldata[i,4]<-vocabdata$total[w]
+  }
+  w<-which(grammardata$ID==myID)
+  if(length(w)>0){
+    alldata[i,5]<-grammardata$total[w]
+  }
+  
+  w<- which(inferencedata$ID==myID)
+  if(length(w)>0){
+    alldata[i,6]<-inferencedata$total[w]
+  }
+  
+  w<- which(implicaturedata$ID==myID)
+  if(length(w)>0){
+    alldata[i,7]<-implicaturedata$implicature_total[w]
+  }
+  
+  w<- which(overturesdata$ID==myID)
+  if(length(w)>0){
+    alldata[i,8]<-overturesdata$total[w]
+  }
+  
+  w<- which(matricesdata$ID==myID)
+  if(length(w)>0){
+    alldata[i,9]<-matricesdata$total[w]
+  }
+}
+
+exclude<-c(299,262,256,286)
+alldata<-alldata[-exclude,]
+##Exclude children with these indices in the dataframe
+## It was dubious whether the children with these numbers
+## entered them correctly on the two testing occasions, so exclude.
+
+alldata<-alldata[-(which(rowSums(is.na(alldata[,c(4:9)]))>2)),] #exclude participants who completed 0 or 1 tasks 
+#(there are 10 empty rows and 5 rows for participants completing just one task)
+
+```
+
+
+# Compute descriptive stats
+
+```{r missing}
+
+#produce table breaking sample down by age, sex, and N children with complete data
+yearband<-table(alldata$year)+2
+n_year<-as.numeric(table(alldata$year))
+n_sex<-matrix(as.numeric(table(alldata$year,alldata$male)),ncol=2)
+n_sex<-cbind(n_sex,n_year-(n_sex[,1]+n_sex[,2]))
+alldata$n_complete<-6-rowSums(is.na(alldata[,4:9]))
+n_complete<-table(alldata$yeargroup,alldata$n_complete)
+mysample<-data.frame(rownames(yearband),n_year,n_sex,n_complete[,1],n_complete[,2],n_complete[,3])
+colnames(mysample)<-c('Yearband','N','Nfem','Nmale','Ndksex','complete4','complete5','complete6')
+
+```
+# Explore desc stats by year group
+
+Table 1 shows means and SDs for scores by year band.
+*Table 1*
+
+```{r descs}
+allmeans1<-data.frame(matrix(NA,nrow=6,ncol=10))
+colnames(allmeans1)<-c('Year','VocN','VocMean','VocSD','GramN','GramMean','GramSD','MatN','MatMean','MatSD')
+allmeans1$Year <-3:8
+allmeans1[,2]<-aggregate(vocab~ year, alldata, length)[2]
+allmeans1[,3]<-aggregate(vocab~ year, alldata, mean)[2]
+allmeans1[,4]<-aggregate(vocab~ year, alldata, sd)[2]
+allmeans1[,5]<-aggregate(grammar~ year, alldata, length)[2]
+allmeans1[,6]<-aggregate(grammar~ year, alldata, mean)[2]
+allmeans1[,7]<-aggregate(grammar~ year, alldata, sd)[2]
+allmeans1[,8]<-aggregate(matrices~ year, alldata, length)[2]
+allmeans1[,9]<-aggregate(matrices~ year, alldata, mean)[2]
+allmeans1[,10]<-aggregate(matrices~ year, alldata, sd)[2]
+allmeans1[,c(3,4,6,7,9,10)]<-round(allmeans1[,c(3,4,6,7,9,10)],2)
+allmeans1
+
+
+allmeans2<-data.frame(matrix(NA,nrow=6,ncol=10))
+colnames(allmeans2)<-c('Year','ImpN','ImpMean','ImpSD','InfN','InfMean','InfSD','OverN','OverMean','OverSD')
+allmeans2$Year <-3:8
+allmeans2[,2]<-aggregate(implicature~ year, alldata, length)[2]
+allmeans2[,3]<-aggregate(implicature~ year, alldata, mean)[2]
+allmeans2[,4]<-aggregate(implicature~ year, alldata, sd)[2]
+allmeans2[,5]<-aggregate(inference~ year, alldata, length)[2]
+allmeans2[,6]<-aggregate(inference~ year, alldata, mean)[2]
+allmeans2[,7]<-aggregate(inference~ year, alldata, sd)[2]
+allmeans2[,8]<-aggregate(overture~ year, alldata, length)[2]
+allmeans2[,9]<-aggregate(overture~ year, alldata, mean)[2]
+allmeans2[,10]<-aggregate(overture~ year, alldata, sd)[2]
+allmeans2[,c(3,4,6,7,9,10)]<-round(allmeans2[,c(3,4,6,7,9,10)],2)
+allmeans2
+
+```
+
+We can create age-scaled scores from regression, but need first to plot.
+
+
+
+```{r doplots}
+
+plot(vocab~jitter(year,.5),data=alldata, main='Vocabulary')
+plot(grammar~jitter(year,.5),data=alldata,main='Grammar')
+plot(inference~jitter(year,.5),data=alldata, main='Inference')
+plot(implicature~jitter(year,.5),data=alldata,main='Implicature')
+plot(overture~jitter(year,.5),data=alldata,main='Overture')
+plot(matrices~jitter(year,.5),data=alldata,main='Matrices')
+
+```
+
+
+# Norms from linear regression
+
+To make sure all assumptions checked etc, will follow these guidelines:
+http://www.sthda.com/english/articles/39-regression-model-diagnostics/161-linear-regression-assumptions-and-diagnostics-in-r-essentials/
+
+Will make a function to do all steps for all variables.
+
+```{r lmnorms}
+doregression <- function(x,y,myname){
+#hist(y,main=myname)
+#plot(x,y,main=myname)
+
+model <- lm(y ~ x)
+
+#plot(model,main=myname)
+
+mysd<-regmodel$coefficients[2]
+reg2<-summary(regmodel)
+rr<-reg2$r.squared
+ss<-sd(y,na.rm=T)
+df<-reg2$df[2]
+se<-ss*sqrt((1-rr)*(df/(df-1)))
+return(list(model$coefficients,se))
+}
+```
+
+
+```{r createnorms}
+mycoeffs<-data.frame(matrix(NA,nrow=6,ncol=5))
+colnames(mycoeffs)<-c('Task','Intercept','Slope','SE','transform')
+j <- 0
+for (i in 4:9){
+  myname<-colnames(alldata)[i]
+  j<-j+1
+  y <- alldata[,i]
+  if (myname=='grammar'){  #normalising transform is usually to invert scale and take logs to remove left skew
+    y <- log(50-y)
+    mycoeffs[j,5]<-'log(50-y)'
+  }
+    if (myname=='inference'){
+    y <- log(21-y)
+    mycoeffs[j,5]<-'log(21-y)'
+    }
+      if (myname=='implicature'){
+    y <- log(34-y)
+    mycoeffs[j,5]<-'log(34-y)'
+      }
+     #overture is not ideal but can't find a transformation to make it any better
+  if (myname=='overture'){
+
+    mycoeffs[j,5]<-'do not use regression?'
+  }
+  x <- alldata$year
+
+  getcoeffs<-doregression(x,y,myname)
+  mycoeffs[j,1]<-myname
+  mycoeffs[j,2]<-getcoeffs[[1]][1]
+  mycoeffs[j,3]<-getcoeffs[[1]][2]
+  mycoeffs[j,4]<-getcoeffs[[2]]
+  
+}
+write.csv(mycoeffs,'reg_coeffs_lang.csv',row.names=F)
+
+```
